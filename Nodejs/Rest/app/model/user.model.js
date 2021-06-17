@@ -58,11 +58,31 @@ User.findById = (EmpID, result) => {
   });
 };
 
+//Get the user with name
+User.findByName = (First_name, result) => {
+  sql.query(`SELECT * FROM users WHERE First_name = ${First_name}`, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("Found user: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    // not found User with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
 //Update a user with Id
-User.updateById = (id, user, result) => {
+User.updateById = (EmpID, user, result) => {
   sql.query(
-    "UPDATE users SET EmpID = ?, First_name = ?, Last_name = ?, Salary = ?, Contact = ?, Empcode = ? WHERE EmpID = ?",
-    [user.EmpID, user.First_name, user.Last_name, user.Contact, user.Salary, user.Empcode],
+    "UPDATE users SET First_name = ?, Last_name = ?, Salary = ?, Contact = ?, Empcode = ? WHERE EmpID = ?",
+    [user.First_name, user.Last_name, user.Contact, user.Salary, user.Empcode,EmpID],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

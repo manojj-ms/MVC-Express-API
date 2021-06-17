@@ -8,7 +8,10 @@ module.exports = app => {
   app.get("/users", users.findAll);
 
    // Retrieve a single user with UserId
-   app.get("/users/:EmpID", users.findOne);
+  app.get("/users/:EmpID", users.findOne);
+
+  // Retrieve a single user with UserId
+  app.get("/users?First_name=[kw]", users.findName);
 
    // Update a Customer with customerId
   app.put("/users/:EmpID", users.update);
@@ -16,7 +19,7 @@ module.exports = app => {
   // Delete a Customer with customerId
   app.delete("/users/:EmpID", users.delete);
 
-  // Delete a Customer with customerId
+  // Delete all customer
   app.delete("/users", users.deleteAll);
 
 };
